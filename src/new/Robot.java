@@ -1,3 +1,27 @@
+/*
+    # # # # # # # # # # # # # # # # # # 
+    # Masters School Robotics         #
+    # Written by Matthew Nappo        #
+    #            Zach Battleman       #
+    # GitHub: @xoreo, @Zanolon        #
+    #                                 #
+    # Class Robot                     #
+    # # # # # # # # # # # # # # # # # # 
+*/
+
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+import java.lang.Math;
+
 public class Robot {
 
     // Declare wheels
@@ -94,6 +118,14 @@ public class Robot {
         double speed = Range.clip(x_right_joy, -1.0, 1.0) * this.maxSpeed;
 
         return -speed;
+    }
+
+    // Stop - Destroy the motors
+    public void Stop() {
+        w0 = null;
+        w1 = null;
+        w2 = null;
+        w3 = null;
     }
 
 }
