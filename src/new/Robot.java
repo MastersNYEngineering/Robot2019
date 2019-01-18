@@ -25,10 +25,10 @@ import java.lang.Math;
 public class Robot {
 
     // Declare wheels
-    private DcMotor w0 = null;
-    private DcMotor w1 = null;
-    private DcMotor w2 = null;
-    private DcMotor w3 = null;
+    public DcMotor w0 = null;
+    public DcMotor w1 = null;
+    public DcMotor w2 = null;
+    public DcMotor w3 = null;
 
     // Declare motors for the lift
     private DcMotor liftRotateBottom = null;
@@ -38,7 +38,7 @@ public class Robot {
     
     // Declare some other stuff
     private double      maxSpeed    = 0.3;
-    private HardwareMap hardwareMap = null;
+    public HardwareMap hardwareMap = null;
 
     Robot(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
@@ -67,6 +67,8 @@ public class Robot {
         s = hardwareMap.get(CRServo.class, id);
         return s;
     }
+
+    /* BEGIN CONTROL METHODS */
 
     // GetDriveSpeeds - Calculate the necessary speed for each motor to drive (based off of joysticks)
     public double[] GetDriveSpeeds() {
@@ -119,6 +121,10 @@ public class Robot {
 
         return -speed;
     }
+
+    
+
+    /* END CONTROL METHODS */
 
     // Stop - Destroy the motors
     public void Stop() {

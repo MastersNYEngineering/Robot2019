@@ -50,7 +50,7 @@ public class Control extends OpMode {
     @Override
     public void loop() {
         Drive();
-        deploy_marker();
+        robot.deploy_marker();
         rotate_lift();
         move_claw();
         lock_arm_func();
@@ -58,17 +58,18 @@ public class Control extends OpMode {
         telemetry.addData("Run Time", runtime.toString());
     }
     
+    private void Drive() {
+        double[] driveSpeeds = robot.GetDriveSpeeds();
+        double turnSpeed = robot.GetTurnSpeed();
+        
+        robot.w0.setPower(driveSpeeds[0] + turnSpeed);
+        robot.w1.setPower(driveSpeeds[1] + turnSpeed);
+        robot.w2.setPower(driveSpeeds[2] + turnSpeed);
+        robot.w3.setPower(driveSpeeds[3] + turnSpeed);
+    }
+
     @Override
     public void stop() {
         robot.stop()
     }
 }
-
-
-
-// double[] move = move();
-// double turn = turn();
-// w0.setPower(move[0] + turn);
-// w1.setPower(move[1] + turn);
-// w2.setPower(move[2] + turn);
-// w3.setPower(move[3] + turn);
