@@ -34,6 +34,7 @@ public class Control extends OpMode {
     
     @Override
     public void init() {
+        // Maybe pass in the telemetry as well
         robot = new Robot(hardwareMap);
     }
 

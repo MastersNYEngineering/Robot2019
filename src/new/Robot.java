@@ -39,11 +39,11 @@ public class Robot {
     // Declare other motors
     private Servo markerDeployServo = null;
     private Servo armLockServo      = null;
-    private Servo claw              = null;
+    private Servo clawServo         = null;
 
     // Declare some other stuff
-    public double     maxSpeed    = 0.3;
     public HardwareMap hardwareMap = null;
+    public double      maxSpeed    = 0.3;
 
     Robot(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
@@ -62,11 +62,10 @@ public class Robot {
         clawServoRight = InitCRServo("drive_claw_right");
         clawServoLeft  = InitCRServo("drive_claw_left");
 
-
         // Init other motors
         markerDeployServo = InitServo("marker");
         armLockServo      = InitServo("arm_lock");
-        claw              = InitServo("claw");
+        clawServo         = InitServo("claw");
 
     }
 
@@ -150,41 +149,41 @@ public class Robot {
         return -speed;
     }
 
-    boolean deployMarkerPressed = false;
+    public boolean deployMarkerPressed = false;
     // DeployMarker - The robot's marker deployment system
     void DeployMarker() {
-        double currentPos = deploy_servo.getPosition();
+        double currentPos = markerDeployServo.getPosition();
         telemetry.addData("marker position", currentPos);
         if (gamepad1.x) {
             if (deployMarkerPressed) {
                 if (currentPos >= 0) {
-                    deploy_servo.setPosition(0);
+                    markerDeployServo.setPosition(0);
                 }
                 deployMarkerPressed = false;
             } else if (currentPos == false) {
                 if (currentPos <= 0) {
-                    deploy_servo.setPosition(.5);
+                    markerDeployServo.setPosition(.5);
                 }
                 deployMarkerPressed = true;
             }
         }
     }
 
-    boolean lockArmPressed = false;
+    public boolean lockArmPressed = false;
     // LockArm - Lock/unlock the robot's arm lock
     void LockArm() {
-        double currentPos = lock_arm.getPosition();
+        double currentPos = armLockServo.getPosition();
         telemetry.addData("arm lock servo position", currentPos);
         if (gamepad1.y) {
             if (lockArmPressed == true) {
                 if (currentPos >.1) {
-                    lock_arm.setPosition(0.0);
+                    armLockServo.setPosition(0.0);
                 }
                 lockArmPressed = false;
             } else if (lockArmPressed == false) {
                 telemetry.addData("bla", "blahhhhh");
                 if (currentPos < .1) {
-                    lock_arm.setPosition(.8);
+                    armLockServo.setPosition(.8);
                 }
                 lockArmPressed = true;
             }
@@ -192,22 +191,22 @@ public class Robot {
         }
     }
 
-    boolean clawOpen = false;
+    public boolean clawOpen = false;
     // MoveClaw - Open and close the robot's claw
     void MoveClaw() {
-        double currentPos = claw.getPosition();
+        double currentPos = clawServo.getPosition();
         if (gamepad1.b && !clawOpen) {
-            claw.setPosition(1);
+            clawServo.setPosition(1);
             clawOpen = true;
         }
         if (gamepad1.a && clawOpen) {
-            claw.setPosition(-1);
+            clawServo.setPosition(-1);
             clawOpen = false;
         }
     }
 
     // RotateLift - Rotate the robot's lift system
-    void RotateLift() {
+    public void RotateLift() {
         // telemetry.addData("pressed", gamepad1.pressed(gamepad1.right_trigger));
         telemetry.addData("direct", gamepad1.right_trigger);
         
@@ -232,19 +231,19 @@ public class Robot {
     }
 
     // DriveLift - Extend the lift using the rack and pinion system
-    void DriveLift() {
+    public void DriveLift() {
         // Range of CRservo is from -.93 to .88, the midpoint is -.025... NANI?!?!?!
         if (gamepad1.right_bumper) {
-            lift_0.setPower(-.93);
-            lift_1.setPower(-.93);
+            liftServoRight.setPower(-.93);
+            liftServoLeft.setPower(-.93);
         }
         if (gamepad1.right_trigger > 0) {
-            lift_0.setPower(.88);
-            lift_1.setPower(.88);
+            liftServoRight.setPower(.88);
+            liftServoLeft.setPower(.88);
         }
         else {
-            lift_0.setPower(-0.025);
-            lift_1.setPower(-0.025);
+            liftServoRight.setPower(-0.025);
+            liftServoLeft.setPower(-0.025);
         }
     }
 
@@ -256,6 +255,15 @@ public class Robot {
         w1 = null;
         w2 = null;
         w3 = null;
+        
+        liftRotateBottom = null;
+        liftRotateTop    = null;
+        liftServoRight   = null;
+        liftServoLeft    = null;
+
+        markerDeployServo = null;
+        armLockServo      = null;
+        claw              = null;
     }
 
 }
