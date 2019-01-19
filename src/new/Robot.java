@@ -37,10 +37,12 @@ public class Robot {
     private CRServo liftServoLeft    = null;
 
     // Declare other motors
-    private Servo claw = null;
+    private Servo markerDeployServo = null;
+    private Servo armLockServo      = null;
+    private Servo claw              = null;
 
     // Declare some other stuff
-    private double     maxSpeed    = 0.3;
+    public double     maxSpeed    = 0.3;
     public HardwareMap hardwareMap = null;
 
     Robot(HardwareMap hardwareMap) {
@@ -53,8 +55,8 @@ public class Robot {
         w3 = InitDcMotor("w3");
 
         // Init claw rotation
-        liftRotateTop    = InitDcMotor("claw_rotate_top");
         liftRotateBottom = InitDcMotor("claw_rotate");
+        liftRotateTop    = InitDcMotor("claw_rotate_top");
 
         // Init claw drive motors
         clawServoRight = InitCRServo("drive_claw_right");
@@ -62,9 +64,9 @@ public class Robot {
 
 
         // Init other motors
-        AquaInternalFrameDockIconUI
-        claw =
-
+        markerDeployServo = InitServo("marker");
+        armLockServo      = InitServo("arm_lock");
+        claw              = InitServo("claw");
 
     }
 

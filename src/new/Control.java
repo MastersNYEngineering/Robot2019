@@ -50,14 +50,12 @@ public class Control extends OpMode {
     @Override
     public void loop() {
         Drive();
-        robot.deploy_marker();
-        rotate_lift();
-        move_claw();
-        lock_arm_func();
-        drive_lift();
+        FunctionalityLoop();
+        
         telemetry.addData("Run Time", runtime.toString());
     }
     
+    // Drive - Drive the robot during the control period
     private void Drive() {
         double[] driveSpeeds = robot.GetDriveSpeeds();
         double turnSpeed = robot.GetTurnSpeed();
@@ -67,9 +65,18 @@ public class Control extends OpMode {
         robot.w2.setPower(driveSpeeds[2] + turnSpeed);
         robot.w3.setPower(driveSpeeds[3] + turnSpeed);
     }
+    
+    // FunctionalityLoop - Enable control of all other Robot methods
+    private void FunctionalityLoop() {
+        robot.DeployMarker();
+        robot.LockArm();
+        robot.MoveClaw();
+        robot.RotateLift();
+        robot.DriveLift();
+    }
 
     @Override
     public void stop() {
-        robot.stop()
+        robot.Stop();
     }
 }
