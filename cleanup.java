@@ -60,8 +60,8 @@ void RotateLift() {
     telemetry.addData("direct", gamepad1.right_trigger);
     
     double right = 1;
-    double left = -1;
-    if (gamepad1.left_trigger>0) {
+    double left  = -1;
+    if (gamepad1.left_trigger > 0) {
         lift_rotate.setPower(right);
         lift_rotate_top.setPower(right);
     } else {
@@ -79,26 +79,19 @@ void RotateLift() {
     }
 }
 
-           
-
-void drive_lift() {
+// DriveLift - Extend the lift using the rack and pinion system
+void DriveLift() {
     // Range of CRservo is from -.93 to .88, the midpoint is -.025... NANI?!?!?!
     if (gamepad1.right_bumper) {
-        telemetry.addData("right bumper", "pressed");
         lift_0.setPower(-.93);
         lift_1.setPower(-.93);
-        // s_lift_0.setPosition(1);
-        // s_lift_1.setPosition(1);
     }
-    if (gamepad1.right_trigger>0) {
-        telemetry.addData("left bumper", "pressed");
+    if (gamepad1.right_trigger > 0) {
         lift_0.setPower(.88);
         lift_1.setPower(.88);
-        // s_lift_0.setPosition(0);
-        // s_lift_1.setPosition(0);
     }
-    else{
+    else {
         lift_0.setPower(-0.025);
         lift_1.setPower(-0.025);
     }
-    }
+}
