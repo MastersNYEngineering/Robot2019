@@ -1,7 +1,7 @@
 /*
     # # # # # # # # # # # # # # # # # # 
     # Masters School Robotics         #
-    # Written by Matthew Nappo,       #
+    # Written by Matthew Nappo        #
     #            Zach Battleman       #
     # GitHub: @xoreo, @Zanolon        #
     #                                 #
@@ -12,7 +12,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import java.util.concurrent.TimeUnit;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorController;
@@ -22,7 +21,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import java.lang.Math;
-import java.util.*;
+
 @TeleOp(name="Main: New Square Drive", group="Iterative Opmode")
 public class NewSquareDrive extends OpMode {
 
@@ -44,9 +43,6 @@ public class NewSquareDrive extends OpMode {
     private DcMotor lift_rotate_top = null;
     private CRServo lift_0 = null;
     private CRServo lift_1 = null;
-
-    private Servo s_lift_0 = null;
-    private Servo s_lift_1 = null;
     
     private Servo deploy_servo = null;
     private Servo claw = null;
@@ -70,7 +66,7 @@ public class NewSquareDrive extends OpMode {
         return s;
     }
     
-     private CRServo init_CRservo(String id) {
+    private CRServo init_CRservo(String id) {
         CRServo s = null;
         s = hardwareMap.get(CRServo.class, id);
         // s.setDirection(CRServo.Direction.FORWARD);
@@ -175,7 +171,7 @@ public class NewSquareDrive extends OpMode {
     }
 
     boolean arm_func_bool = false;
-    gvoid lock_arm_func() {
+    void lock_arm_func() {
         double current_position = lock_arm.getPosition();
         telemetry.addData("ARM LOCK POSITION", current_position);
         if (gamepad1.y) {
@@ -188,7 +184,7 @@ public class NewSquareDrive extends OpMode {
             } else if (arm_func_bool == false) {
                 telemetry.addData("bla", "blahhhhh");
                 if (current_position < .1) {
-                    lock_arm.setPosition(.8);
+                    lock_arm.setPosition(1);
                 }
                 arm_func_bool = true;
             }
@@ -203,7 +199,7 @@ public class NewSquareDrive extends OpMode {
             claw.setPosition(1);
             open=true;
         }
-        if (gamepad1.a && open) {
+        if (gamepad1.b && open) {
             claw.setPosition(-1);
             open = false;
         }
@@ -254,7 +250,7 @@ public class NewSquareDrive extends OpMode {
                     lift_0.setPower(-0.025);
                     lift_1.setPower(-0.025);
                 }
-                }
+            }
             
 
     @Override
@@ -264,12 +260,12 @@ public class NewSquareDrive extends OpMode {
     @Override
     public void start() {
         // deploy_servo.setPosition(0);
-        lock_arm.setPosition(.8);
+        lock_arm.setPosition(0);
         
         runtime.reset();
         init();
     }
-
+    
     @Override
     public void loop() {
         telemetry.addData("MOTORRRR", deploy_servo.getPosition());
@@ -287,10 +283,9 @@ public class NewSquareDrive extends OpMode {
         drive_lift();
         telemetry.addData("thingerino", lock_arm.getPosition());
         telemetry.addData("SERVO", deploy_servo.getPosition());
-        telemetry.addData("rrrrrr", claw.getPosition());
         telemetry.addData("Run Time", runtime.toString());
     }
-
+    
     @Override
     public void stop() {
         w0 = null;

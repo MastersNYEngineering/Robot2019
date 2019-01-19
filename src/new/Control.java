@@ -22,9 +22,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import java.lang.Math;
 
-@TeleOp(name="Teleop: Square Drive", group="Iterative Opmode")
+@TeleOp(name="Teleop: Control (Square Drive)", group="Iterative Opmode")
 public class Control extends OpMode {
-
     // Declare the Robot class
     private Robot robot;
 
@@ -35,7 +34,7 @@ public class Control extends OpMode {
     @Override
     public void init() {
         // Maybe pass in the telemetry as well
-        robot = new Robot(hardwareMap);
+        robot = new Robot(hardwareMap, gamepad1);
     }
 
     @Override

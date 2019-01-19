@@ -14,6 +14,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -43,10 +45,12 @@ public class Robot {
 
     // Declare some other stuff
     public HardwareMap hardwareMap = null;
+    public Gamepad     gamepad1    = null;
     public double      maxSpeed    = 0.3;
 
-    Robot(HardwareMap hardwareMap) {
+    Robot(HardwareMap hardwareMap, Gamepad gamepad1) {
         this.hardwareMap = hardwareMap;
+        this.gamepad1 = gamepad1;
 
         // Init driving wheels
         w0 = InitDcMotor("w0");
@@ -59,8 +63,8 @@ public class Robot {
         liftRotateTop    = InitDcMotor("claw_rotate_top");
 
         // Init claw drive motors
-        clawServoRight = InitCRServo("drive_claw_right");
-        clawServoLeft  = InitCRServo("drive_claw_left");
+        liftServoRight = InitCRServo("drive_claw_right");
+        liftServoLeft  = InitCRServo("drive_claw_left");
 
         // Init other motors
         markerDeployServo = InitServo("marker");
@@ -126,10 +130,10 @@ public class Robot {
         double w2_power = -speed * Math.sin(theta_3);
         double w3_power = -speed * Math.sin(theta_4);
         
-        telemetry.addData("w0_power", w0_power);
-        telemetry.addData("w1_power", w1_power);
-        telemetry.addData("w2_power", w2_power);
-        telemetry.addData("w3_power", w3_power);
+        // telemetry.addData("w0_power", w0_power);
+        // telemetry.addData("w1_power", w1_power);
+        // telemetry.addData("w2_power", w2_power);
+        // telemetry.addData("w3_power", w3_power);
         
         double[] speeds = {
             w0_power,
@@ -153,14 +157,14 @@ public class Robot {
     // DeployMarker - The robot's marker deployment system
     void DeployMarker() {
         double currentPos = markerDeployServo.getPosition();
-        telemetry.addData("marker position", currentPos);
+        // telemetry.addData("marker position", currentPos);
         if (gamepad1.x) {
             if (deployMarkerPressed) {
                 if (currentPos >= 0) {
                     markerDeployServo.setPosition(0);
                 }
                 deployMarkerPressed = false;
-            } else if (currentPos == false) {
+            } else if (deployMarkerPressed == false) {
                 if (currentPos <= 0) {
                     markerDeployServo.setPosition(.5);
                 }
@@ -173,7 +177,7 @@ public class Robot {
     // LockArm - Lock/unlock the robot's arm lock
     void LockArm() {
         double currentPos = armLockServo.getPosition();
-        telemetry.addData("arm lock servo position", currentPos);
+        // telemetry.addData("arm lock servo position", currentPos);
         if (gamepad1.y) {
             if (lockArmPressed == true) {
                 if (currentPos >.1) {
@@ -181,7 +185,6 @@ public class Robot {
                 }
                 lockArmPressed = false;
             } else if (lockArmPressed == false) {
-                telemetry.addData("bla", "blahhhhh");
                 if (currentPos < .1) {
                     armLockServo.setPosition(.8);
                 }
@@ -206,10 +209,7 @@ public class Robot {
     }
 
     // RotateLift - Rotate the robot's lift system
-    public void RotateLift() {
-        // telemetry.addData("pressed", gamepad1.pressed(gamepad1.right_trigger));
-        telemetry.addData("direct", gamepad1.right_trigger);
-        
+    public void RotateLift() {        
         double right = 1;
         double left  = -1;
         if (gamepad1.left_trigger > 0) {
@@ -223,7 +223,6 @@ public class Robot {
         if (gamepad1.left_bumper) {
             liftRotateBottom.setPower(left);
             liftRotateTop.setPower(left);
-            telemetry.addData("thing",liftRotateTop.getPower());
         } else {
             liftRotateBottom.setPower(0);
             liftRotateTop.setPower(0);
@@ -263,7 +262,7 @@ public class Robot {
 
         markerDeployServo = null;
         armLockServo      = null;
-        claw              = null;
+        clawServo         = null;
     }
 
 }
