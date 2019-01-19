@@ -62,20 +62,20 @@ void RotateLift() {
     double right = 1;
     double left  = -1;
     if (gamepad1.left_trigger > 0) {
-        lift_rotate.setPower(right);
-        lift_rotate_top.setPower(right);
+        liftRotateBottom.setPower(right);
+        liftRotateTop.setPower(right);
     } else {
-        lift_rotate.setPower(0);
-        lift_rotate_top.setPower(0);
+        liftRotateBottom.setPower(0);
+        liftRotateTop.setPower(0);
     }
     
     if (gamepad1.left_bumper) {
-        lift_rotate.setPower(left);
-        lift_rotate_top.setPower(left);
-        telemetry.addData("thing",lift_rotate_top.getPower());
+        liftRotateBottom.setPower(left);
+        liftRotateTop.setPower(left);
+        telemetry.addData("thing",liftRotateTop.getPower());
     } else {
-        lift_rotate.setPower(0);
-        lift_rotate_top.setPower(0);
+        liftRotateBottom.setPower(0);
+        liftRotateTop.setPower(0);
     }
 }
 
